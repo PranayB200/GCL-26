@@ -1,0 +1,161 @@
+
+
+Time comlexity
+
+input => n (size of the file) tends to infinity
+
+1. Electronic transfer: O(n)    
+2. Physical transfer: O(1)      O(1000)
+
+Smaller values of n: 1 works better
+But for larger values of n: 2 works better
+
+
+O(1) < O(logn) < O(n) < O(n*logn) < O(n*n) < O(2^n) < O(n!)
+
+Asymptotic analysis:
+
+- Big-O       : provides an upper bound of time.
+- Big-Omega   : provides a lower bound.
+- Big-Theta   : provides the exact tight bound.
+
+- If an algo is Theta(n), it is also O(n*logn), O(n*n), O(2^n), O(n!)
+- If an algo is Theta(n*logn), it is also Omega(1), Omega(logn), Omega(n)
+- 
+
+
+If O(n*n) is an upper bound for a O(n) algorithm, then it means that for infinity large values of n,
+O(n*n) will be slower compared to O(n).
+
+for (int i = 0; i < n; i++) {
+    cout << "Hello"; // O(1)
+}
+
+
+Theta(n)
+O(n), O(n*n), O(2^n), O(n!)
+Omega(n), Omega(1), Omega(logn)
+
+Industry's Big-O == Academic's Big-Theta
+
+O(n) => n provides an exact bound of time to the algorithm.
+
+
+- Space Complexity:
+
+    int arr[n] => O(n)
+    int arr[n][n] => O(n*n)
+
+
+void first_n(int n) {
+    if (n == 0) {
+        return;
+    }
+    first_n(n - 1); // O(1) time 
+    cout << n << " "; // O(1) time
+}
+
+O(1), O(n), O(n*n), O(n!)
+
+// 1 2 3 4 5 ... n
+
+n = 5
+
+first_n(5) => first_n(4) => first_n(3) => first_n(2) => first_n(1) => first_n(0)
+O(1)            O(1)            O(1)        O(1)            O(1)        O(1)
+
+(n + 1) recursive calls taking up O(1) space in the worst-case.
+O(n + 1) = O(n)
+
+Space complexity of recursion: O((number of recursive calls in the worst-case) * (space taken up by each call)).
+
+For the above example,
+number of recursive calls in the worst-case: O(n)
+space taken up by each call: O(1)
+
+Therefore, Space complexity = O(n) * O(1) = O(n * 1) = O(n)
+
+
+void print_array(vector<int> arr, int n, int times) { // A new copy of `arr` gets allocated with each recursive call.
+    if (n == 0) {
+        return;
+    }
+    print_array(arr, n, times - 1); // O(1) time 
+    for (int i = 0; i < n; i++) { // O(n) time 
+        cout << arr[i] << ", ";
+    }
+}
+
+
+int main() {
+    vector<int> arr{1, 2, 3, 4, 5};
+    int n = 5;
+    print_array(arr, n, n); // Prints an array of size n, a total n-number of times.
+    return 0;
+}
+
+number of recursive calls in the worst-case: O(n)
+space taken up by each call: O(n) because a new copy of an array of size n is getting allocated with each recursive call.
+
+
+# Best-case, Worst-case, and Average-case time complexity
+
+For example, we are doing a linear search of an element `x` in an array `arr`. Array is of size `n`.
+
+int linear_search(int arr[], int n, int x) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == x) return i;
+    }
+    return -1;
+}
+
+Best-case time complexity: O(1).
+Worst-case time complexity: O(n).
+Average-case time complexity: O(n).
+
+present at 0th index: 1 comparison
+present at 1st index: 2 comparison
+present at 2nd index: 3 comparison
+...
+present at (n-1)th index: n comparison
+
+
+(1 + 2 + 3 + .... + n) / n = ((n*(n + 1)) / 2) / n = O((n + 1) / 2) = O(n)
+
+
+# Logarithmic time complexities
+
+Binary search
+Sorted array:   arr[] = {1, 4, 5, 7, 8, 10}
+                x = 10 is present or not.
+
+                low = 0, high = 5           // Range size = 6
+                mid = (0 + 5) / 2 = 2
+
+                arr[mid] = 5
+
+                low = 3, high = 5           // Range size = 3
+                mid = (3 + 5) / 2 = 4
+
+                arr[mid] = 8
+
+                low = 5, high = 5           // Range size = 1
+                mid = (5 + 5) / 2 = 5
+
+                arr[mid] = 10 // found it!
+
+                If we are doing `k` number of comparisons, then the TC will be O(k)
+
+                n = 8
+                8 => 4 => 2 => 1
+                1 => 2 => 4 => 8
+
+                2^k = n
+                k = log(n) (base-2)
+
+                O(log(n))
+
+O(n + n*n) = O(n*n)
+O(n*logn + logn) = O(nlogn)
+
+
