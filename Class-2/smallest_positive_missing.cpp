@@ -42,7 +42,7 @@ int smallest_positive_missing(vector<int> arr) {
             arr[i] = n + 1;
         }
     }
-
+    
     // Step-2: Bucketing
     for (int i = 0; i < n; i++) {
 
