@@ -4,22 +4,22 @@ using namespace std;
 // ---------------------------------------------------------------
 vector<vector<int>> memo;
 
-// Considering s1[i ... n-1] and s2[j ... m-1].
-int lcs_util(string &s1, string &s2, int i, int j) {
+// Considering s1[0 ... n-1] and s2[0 ... m-1].
+int lcs_util(string &s1, string &s2, int n, int m) {
 
-    if (i == s1.length() or j == s2.length()) { // If any of the strings become empty.
+    if (n == 0 or m == 0) { // If any of the strings become empty.
         return 0;
     }
-    if (memo[i][j] != -1) {
-        return memo[i][j];
+    if (memo[n][m] != -1) {
+        return memo[n][m];
     }
 
-    int res = max(lcs_util(s1, s2, i + 1, j), lcs_util(s1, s2, i, j + 1));
-    if (s1[i] == s2[j]) {
-        res = max(res, 1 + lcs_util(s1, s2, i + 1, j + 1));
+    int res = max(lcs_util(s1, s2, n - 1, m), lcs_util(s1, s2, n, m - 1));
+    if (s1[n - 1] == s2[m - 1]) {
+        res = max(res, 1 + lcs_util(s1, s2, n - 1, m - 1));
     }
 
-    return memo[i][j] = res;
+    return memo[n][m] = res;
 }
 
 int lcs(string s1, string s2) {
@@ -27,9 +27,9 @@ int lcs(string s1, string s2) {
     int n = s1.length();
     int m = s2.length();
 
-    memo = vector<vector<int>> (n, vector<int> (m, -1));
+    memo = vector<vector<int>> (n + 1, vector<int> (m + 1, -1));
 
-    return lcs_util(s1, s2, 0, 0);
+    return lcs_util(s1, s2, n, m);
 }
 // ---------------------------------------------------------------
 
@@ -37,6 +37,7 @@ int lcs_bottom_up(string s1, string s2) {
     int n = s1.length();
     int m = s2.length();
 
+    // dp[i][j] == LCS(s1[0 ... i - 1], s2[0 ... j - 1])
     vector<vector<int>> dp(n + 1, vector<int> (m + 1));
 
     // Looking at the base-case of top-down, filling some values in the Dp table.
